@@ -1,34 +1,34 @@
 #include <iostream>
 #include <iomanip>
 #include "dictionary.h"
-#include "dictionary.h"      // intentional
+#include "dictionary.h" // intentional
 #include "settings.h"
-#include "settings.h"        // intentional
+#include "settings.h" // intentional
 #include "timeMonitor.h"
-#include "timeMonitor.h"     // intentional
+#include "timeMonitor.h" // intentional
 #include "logger.h"
-#include "logger.h"          // intentional
+#include "logger.h" // intentional
 
 // Cheching if header guards exist and follow convention.
 #ifndef SENECA_DICTIONARY_H
-    #error "The header guard for 'dictionary.h' doesn't follow the convention!"
+#error "The header guard for 'dictionary.h' doesn't follow the convention!"
 #endif
 #ifndef SENECA_SETTINGS_H
-    #error "The header guard for 'settings.h' doesn't follow the convention!"
+#error "The header guard for 'settings.h' doesn't follow the convention!"
 #endif
 #ifndef SENECA_TIMEMONITOR_H
-    #error "The header guard for 'timeMonitor.h' doesn't follow the convention!"
+#error "The header guard for 'timeMonitor.h' doesn't follow the convention!"
 #endif
 #ifndef SENECA_EVENT_H
-    #error "The header guard for 'event.h' doesn't follow the convention!"
+#error "The header guard for 'event.h' doesn't follow the convention!"
 #endif
 #ifndef SENECA_LOGGER_H
-    #error "The header guard for 'logger.h' doesn't follow the convention!"
+#error "The header guard for 'logger.h' doesn't follow the convention!"
 #endif
 
 int cout = 0; // won't compile if headers don't follow convention regarding namespaces
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
 	std::cout << "Command Line:\n";
 	std::cout << "------------------------------------------------------\n";
@@ -97,7 +97,7 @@ int main(int argc, char** argv)
 
 		{
 			// check for self assignment
-			seneca::Dictionary& alias = dict;
+			seneca::Dictionary &alias = dict;
 			dict = alias; // crash here if copy assignment is incorrectly implemented
 		}
 
@@ -119,7 +119,7 @@ int main(int argc, char** argv)
 		std::cout << "==========:==========:==========:==========:==========\n";
 
 		seneca::Dictionary dict1 = dict; // make a copy of the bif dictionary
-		
+
 		timer.startEvent("Move Constructor");
 		seneca::Dictionary dict2 = std::move(dict1);
 		log.addEvent(timer.stopEvent());
@@ -136,7 +136,7 @@ int main(int argc, char** argv)
 
 		{
 			// check for self assignment
-			seneca::Dictionary& alias = dict;
+			seneca::Dictionary &alias = dict;
 			dict = std::move(alias); // crash here if move assignment is incorrectly implemented
 		}
 
@@ -176,14 +176,17 @@ int main(int argc, char** argv)
 		std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n";
 	}
 
-
-	std::cout << '\n' << log;
+	std::cout << '\n'
+			  << log;
 	seneca::g_settings.m_time_units = "microseconds";
-	std::cout << '\n' << log;
+	std::cout << '\n'
+			  << log;
 	seneca::g_settings.m_time_units = "milliseconds";
-	std::cout << '\n' << log;
+	std::cout << '\n'
+			  << log;
 	seneca::g_settings.m_time_units = "seconds";
-	std::cout << '\n' << log;
+	std::cout << '\n'
+			  << log;
 
 	return 0;
 }
