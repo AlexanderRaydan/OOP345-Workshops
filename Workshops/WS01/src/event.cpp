@@ -28,6 +28,7 @@ namespace seneca
             duration_value = std::chrono::duration_cast<std::chrono::duration<double>>(duration_ns).count();
             os << std::setw(2) << callCounter << ": "
                << std::setw(40) << event.m_name << " -> "
+
                << std::setw(2) << std::fixed << std::setprecision(0) << duration_value << " " << unit;
         }
         else if (unit == "milliseconds")

@@ -95,23 +95,23 @@ namespace seneca
         if (pos == PartOfSpeech::Unknown)
             return "Unknown";
         else if (pos == PartOfSpeech::Noun)
-            return "Noun";
+            return "noun";
         else if (pos == PartOfSpeech::Pronoun)
-            return "Pronoun";
+            return "pronoun";
         else if (pos == PartOfSpeech::Adjective)
-            return "Adjective";
+            return "adjective";
         else if (pos == PartOfSpeech::Adverb)
-            return "Adverb";
+            return "adverb";
         else if (pos == PartOfSpeech::Verb)
-            return "Verb";
+            return "verb";
         else if (pos == PartOfSpeech::Preposition)
-            return "Preposition";
+            return "preposition";
         else if (pos == PartOfSpeech::Conjunction)
-            return "Conjunction";
+            return "conjunction";
         else if (pos == PartOfSpeech::Interjection)
-            return "Interjection";
+            return "interjection";
         else
-            return "Invalid";
+            return "invalid";
     }
 
     Dictionary::Dictionary(const char *filename) : words(nullptr), wordCount(0)
@@ -151,6 +151,8 @@ namespace seneca
             words[wordCount].m_definition = definition;
             wordCount++;
         }
+
+        file.close();
     }
 
     void Dictionary::searchWord(const char *word) const

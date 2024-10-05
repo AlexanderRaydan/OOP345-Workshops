@@ -6,7 +6,7 @@
 
 // Cheching if header guards exist and follow convention.
 #ifndef SENECA_FOODORDER_H
-    #error "The header guard for 'FoodOrder.h' doesn't follow the convention!"
+#error "The header guard for 'FoodOrder.h' doesn't follow the convention!"
 #endif
 
 int cout = 0; // won't compile if headers don't follow convention regarding namespaces
@@ -24,7 +24,7 @@ int cout = 0; // won't compile if headers don't follow convention regarding name
 
 // TODO: write the prototype for the main function
 //         to accept command line arguments
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
 	std::cout << "Command Line:\n";
 	std::cout << "--------------------------\n";
@@ -48,11 +48,13 @@ int main(int argc, char** argv)
 	{
 
 		// Rates change from day 1 to day 2
-		if (day == 1){
+		if (day == 1)
+		{
 			g_taxrate = 0.13;
 			g_dailydiscount = 1.15;
 		}
-		else{
+		else
+		{
 			g_taxrate = 0.14;
 			g_dailydiscount = 1.20;
 		}
@@ -71,29 +73,32 @@ int main(int argc, char** argv)
 		char ordertag = '\0';
 
 		// loop through each order in the file
-		while (in) {
+		while (in)
+		{
 
-				// read in the ordertag
-				in >> ordertag;
-				// skip the delimiter
-				in.ignore();
+			// read in the ordertag
+			in >> ordertag;
+			// skip the delimiter
+			in.ignore();
 
-				// end of the file
-				if (in.fail())
-					break;
+			// end of the file
+			if (in.fail())
+				break;
 
-				// read in the rest of the data as a FoodOrder
-				currentOrder.read(in);
+			// read in the rest of the data as a FoodOrder
+			currentOrder.read(in);
 
-				// Handle the in house and delivery orders differently
-				if (ordertag == 'I') {
-					seneca::FoodOrder copy = currentOrder;
-					copy.display();
-				}
-				else if (ordertag == 'D'){ // adds the delivery orders to the record
-					recordedDeliveryOrders[numDeliveries++] = currentOrder;
-					currentOrder.display();
-				}
+			// Handle the in house and delivery orders differently
+			if (ordertag == 'I')
+			{
+				seneca::FoodOrder copy = currentOrder;
+				copy.display();
+			}
+			else if (ordertag == 'D')
+			{ // adds the delivery orders to the record
+				recordedDeliveryOrders[numDeliveries++] = currentOrder;
+				currentOrder.display();
+			}
 		}
 	}
 
