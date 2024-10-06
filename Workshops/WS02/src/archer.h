@@ -57,7 +57,7 @@ namespace seneca
 
 		int damage = this->getAttackAmnt(); // Get calculated damage
 
-		std::cout << "Archer deals " << damage << " ranged damage!" << std::endl;
+		std::cout << "    Archer deals " << damage << " ranged damage!" << std::endl;
 
 		enemy->takeDamage(damage); // Apply damage to the enemy
 	}
@@ -67,7 +67,7 @@ namespace seneca
 	{
 		std::cout << this->getName() << " is attacked for " << dmg << " damage." << std::endl;
 
-		std::cout << "Archer has a defense of " << this->getDefenseAmnt() << ". Reducing damage received." << std::endl;
+		std::cout << "    Archer has a defense of " << this->getDefenseAmnt() << ". Reducing damage received." << std::endl;
 		dmg -= this->getDefenseAmnt(); // Reduce damage by defense
 
 		if (dmg < 0)

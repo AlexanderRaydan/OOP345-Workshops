@@ -78,7 +78,7 @@ namespace seneca
 
 		m_ability.transformDamageDealt(damage);
 
-		std::cout << "Barbarian deals " << damage << " melee damage!" << std::endl;
+		std::cout << "    Barbarian deals " << damage << " melee damage!" << std::endl;
 
 		enemy->takeDamage(damage);
 	}
@@ -87,9 +87,9 @@ namespace seneca
 	void Barbarian<T, Ability_t, Weapon_t>::takeDamage(int dmg)
 	{
 
-		std::cout << this->getName() << " is attacked for " << dmg << "." << std::endl;
+		std::cout << this->getName() << " is attacked for " << dmg << " damage." << std::endl;
 
-		std::cout << "Barbarian has a defense of " << m_baseDefense << "Reducing damage received." << std::endl;
+		std::cout << "    Barbarian has a defense of " << m_baseDefense << ". Reducing damage received." << std::endl;
 
 		dmg -= m_baseDefense;
 

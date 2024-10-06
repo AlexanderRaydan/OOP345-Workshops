@@ -38,13 +38,18 @@ namespace seneca
 	{
 		m_health -= dmg;
 
+		if (m_health < 0)
+		{
+			setHealth(0);
+		}
+
 		if (!isAlive())
 		{
-			std::cout << getName() << " has been defeated!" << std::endl;
+			std::cout << "    " << getName() << " has been defeated!" << std::endl;
 			return;
 		}
 
-		std::cout << getName() << " took " << dmg << " damage, " << getHealth() << " health remaining." << std::endl;
+		std::cout << "    " << getName() << " took " << dmg << " damage, " << getHealth() << " health remaining." << std::endl;
 	}
 
 	template <typename T>
@@ -69,6 +74,11 @@ namespace seneca
 	void CharacterTpl<T>::setHealth(int health)
 	{
 		m_health = health;
+
+		if (int(health) > m_healthMax)
+		{
+			setHealthMax(health);
+		}
 	}
 }
 #endif

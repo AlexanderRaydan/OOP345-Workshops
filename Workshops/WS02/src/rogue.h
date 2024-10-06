@@ -64,7 +64,7 @@ namespace seneca
 		m_firstAbility.transformDamageDealt(damage);
 		m_secondAbility.transformDamageDealt(damage);
 
-		std::cout << "Rogue deals " << damage << " melee damage!" << std::endl;
+		std::cout << "    Rogue deals " << damage << " melee damage!" << std::endl;
 
 		enemy->takeDamage(damage);
 	}
@@ -74,7 +74,7 @@ namespace seneca
 	{
 		std::cout << this->getName() << " is attacked for " << dmg << " damage." << std::endl;
 
-		std::cout << "Rogue has a defense of " << this->getDefenseAmnt() << ". Reducing damage received." << std::endl;
+		std::cout << "    Rogue has a defense of " << this->getDefenseAmnt() << ". Reducing damage received." << std::endl;
 		dmg -= this->getDefenseAmnt();
 
 		if (dmg < 0)

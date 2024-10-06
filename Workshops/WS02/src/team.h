@@ -13,7 +13,7 @@ namespace seneca
 	private:
 		Character **m_members;
 		size_t m_size;
-		std::string m_name;
+		std::string m_name = "";
 
 	public:
 		Team(const char *name);
@@ -23,7 +23,7 @@ namespace seneca
 		Team(Team &&other);
 		Team &operator=(Team &&other);
 
-		void addMember(const Character *c);
+		void addMember(Character *c);
 		void removeMember(const std::string &name);
 		Character *operator[](size_t idx) const;
 		void showMembers() const;
@@ -85,7 +85,7 @@ namespace seneca
 	{
 		other.m_members = nullptr;
 		other.m_size = 0;
-		other.m_name = nullptr;
+		other.m_name = "";
 	}
 
 	// Move assignment operator
@@ -107,13 +107,13 @@ namespace seneca
 
 			other.m_members = nullptr;
 			other.m_size = 0;
-			other.m_name = nullptr;
+			other.m_name = "";
 		}
 		return *this;
 	}
 
 	// Add a character to the team
-	void Team::addMember(const Character *c)
+	void Team::addMember(Character *c)
 	{
 		for (size_t i = 0; i < m_size; i++)
 		{
@@ -139,19 +139,31 @@ namespace seneca
 	// Remove a character by name
 	void Team::removeMember(const std::string &name)
 	{
-
-		// acá hay un peo
+		size_t indexToRemove = m_size;
 		for (size_t i = 0; i < m_size; i++)
 		{
 			if (m_members[i]->getName() == name)
 			{
-				delete m_members[i];
-				m_members[i] = m_members[m_size - 1];
-				m_size--;
-				return;
+				indexToRemove = i;
+				break;
 			}
 		}
-		std::cout << "Character " << name << " not found!" << std::endl;
+
+		if (indexToRemove == m_size)
+		{
+			return;
+		}
+
+		delete m_members[indexToRemove];
+
+		for (size_t i = indexToRemove; i < m_size - 1; i++)
+		{
+			m_members[i] = m_members[i + 1];
+		}
+
+		m_members[m_size - 1] = nullptr;
+
+		m_size--;
 	}
 
 	Character *Team::operator[](size_t idx) const
@@ -165,16 +177,16 @@ namespace seneca
 
 	void Team::showMembers() const
 	{
-		if (m_size == 0)
+		if (m_name == "")
 		{
 			std::cout << "No team." << std::endl;
 			return;
 		}
 
-		std::cout << "[" << m_name << "] TEAM" << std::endl;
+		std::cout << "[Team] " << m_name << std::endl;
 		for (size_t i = 0; i < m_size; i++)
 		{
-			std::cout << (i + 1) << ": " << *(m_members[i]) << std::endl;
+			std::cout << "    " << (i + 1) << ": " << *(m_members[i]) << std::endl;
 		}
 	}
 }
