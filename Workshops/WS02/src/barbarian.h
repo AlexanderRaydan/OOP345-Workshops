@@ -1,7 +1,7 @@
 #ifndef SENECA_BARBARIAN_H
 #define SENECA_BARBARIAN_H
 #include <iostream>
-#include "character_tpl.h"
+#include "characterTpl.h"
 
 namespace seneca
 {

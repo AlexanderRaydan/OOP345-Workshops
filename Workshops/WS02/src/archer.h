@@ -2,7 +2,7 @@
 #define SENECA_ARCHER_H
 
 #include <iostream>
-#include "character_tpl.h"
+#include "characterTpl.h"
 #include "health.h"
 
 namespace seneca
