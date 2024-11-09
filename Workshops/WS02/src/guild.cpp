@@ -16,6 +16,7 @@ namespace seneca
 	Guild::~Guild()
 	{
 		delete[] m_members;
+		m_members = nullptr;
 	}
 
 	// Copy constructor
@@ -66,12 +67,10 @@ namespace seneca
 	{
 		if (this != &other)
 		{
-			// Clean up current resources
 			for (size_t i = 0; i < m_size; i++)
 			{
-				delete m_members[i];
-			}
-			delete[] m_members;
+				m_members[i] = other.m_members[i];
+			};
 
 			// Move data from other
 			m_members = other.m_members;

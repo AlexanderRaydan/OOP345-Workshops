@@ -54,6 +54,35 @@ namespace seneca
         void searchWord(const char *word) const;
     };
 
+    template <typename T>
+    T extract(const T array[], int len, int index)
+    {
+
+        if (index > len)
+        {
+            index = len;
+        }
+        T sum = 0;
+        for (int i = 0; i < index; i++)
+        {
+            sum += array[i];
+        }
+
+        return sum;
+    }
+
+    template <>
+    std::string extract<std::string>(const std::string array[], int len, int index)
+    {
+        if (index > len)
+        {
+            index = len;
+        }
+        std::string element = array[index];
+
+        return array[index].substr(0, index);
+    }
+
 }
 
 #endif
