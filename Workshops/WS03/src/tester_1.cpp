@@ -2,66 +2,68 @@
 #include <iomanip>
 #include <fstream>
 #include "collection.h"
-#include "collection.h"     // intentional
+#include "collection.h" // intentional
 #include "spellChecker.h"
-#include "spellChecker.h"   // intentional
+#include "spellChecker.h" // intentional
 #include "book.h"
-#include "book.h"           // intentional
+#include "book.h" // intentional
 #include "movie.h"
-#include "movie.h"          // intentional
+#include "movie.h" // intentional
 #include "tvShow.h"
-#include "tvShow.h"         // intentional
+#include "tvShow.h" // intentional
 #include "mediaItem.h"
-#include "mediaItem.h"      // intentional
+#include "mediaItem.h" // intentional
 #include "settings.h"
-#include "settings.h"       // intentional
+#include "settings.h" // intentional
 
 // Cheching if header guards exist and follow convention.
 #ifndef SENECA_SETTINGS_H
-    #error "The header guard for 'settings.h' doesn't follow the convention!"
+#error "The header guard for 'settings.h' doesn't follow the convention!"
 #endif
 #ifndef SENECA_MEDIAITEM_H
-    #error "The header guard for 'mediaItem.h' doesn't follow the convention!"
+#error "The header guard for 'mediaItem.h' doesn't follow the convention!"
 #endif
 #ifndef SENECA_BOOK_H
-    #error "The header guard for 'book.h' doesn't follow the convention!"
+#error "The header guard for 'book.h' doesn't follow the convention!"
 #endif
 #ifndef SENECA_MOVIE_H
-    #error "The header guard for 'movie.h' doesn't follow the convention!"
+#error "The header guard for 'movie.h' doesn't follow the convention!"
 #endif
 #ifndef SENECA_TVSHOW_H
-    #error "The header guard for 'tvShow.h' doesn't follow the convention!"
+#error "The header guard for 'tvShow.h' doesn't follow the convention!"
 #endif
 #ifndef SENECA_SPELLCHECKER_H
-    #error "The header guard for 'spellChecker.h' doesn't follow the convention!"
+#error "The header guard for 'spellChecker.h' doesn't follow the convention!"
 #endif
 #ifndef SENECA_COLLECTION_H
-    #error "The header guard for 'collection.h' doesn't follow the convention!"
+#error "The header guard for 'collection.h' doesn't follow the convention!"
 #endif
 
 int cout = 0; // won't compile if headers don't follow convention regarding namespaces
 
 enum AppErrors
 {
-	CannotOpenFile = 1, // An input file cannot be opened
-	BadArgumentCount = 2, // The application didn't receive anough parameters
+	CannotOpenFile = 1,		// An input file cannot be opened
+	BadArgumentCount = 2,	// The application didn't receive anough parameters
 	RecordParsingError = 3, // Some unknown issue appeared when processing a record from file
 };
 
 // The observer function for adding media items to the collection:
 //   should be called every time a new item is added to the collection
-void itemAddedObserver(const seneca::Collection& theCollection, const seneca::MediaItem& theBook)
+void itemAddedObserver(const seneca::Collection &theCollection, const seneca::MediaItem &theBook)
 {
 	std::cout << "Item \"" << theBook.getTitle() << "\" added!\n";
 }
 
+template <typename T>
+void loadMedia(seneca::Collection &col, const char *filename);
+void loadEpisodes(seneca::Collection &col, const char *filename);
 
-template<typename T>
-void loadMedia(seneca::Collection& col, const char* filename);
-void loadEpisodes(seneca::Collection& col, const char* filename);
-
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
+
+	freopen("output.txt", "w", stdout);
+
 	std::cout << "Command Line:\n";
 	std::cout << "--------------------------\n";
 	for (int i = 0; i < argc; ++i)
@@ -75,7 +77,7 @@ int main(int argc, char** argv)
 		std::cout << "==========:==========:==========:==========:==========\n";
 		::loadMedia<seneca::TvShow>(col, "tvShows.csv");
 		::loadEpisodes(col, "episodes.csv");
-		::loadMedia<seneca::TvShow>(col, "tvShows.csv");       // should have no effect since the shows are already loaded
+		::loadMedia<seneca::TvShow>(col, "tvShows.csv"); // should have no effect since the shows are already loaded
 		std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n";
 	}
 
@@ -201,20 +203,20 @@ int main(int argc, char** argv)
 		std::cout << "==========:==========:==========:==========:==========\n";
 		seneca::g_settings.m_tableView = false;
 		seneca::g_settings.m_maxSummaryWidth = 100;
-		seneca::TvShow* show = dynamic_cast<seneca::TvShow*>(col["Agatha All Along"]);
+		seneca::TvShow *show = dynamic_cast<seneca::TvShow *>(col["Agatha All Along"]);
 		std::cout << *show;
 		std::cout << "Average size of an episode ["
-			<< static_cast<int>(show->getEpisodeAverageLength() / 60) << "] minutes.\n";
+				  << static_cast<int>(show->getEpisodeAverageLength() / 60) << "] minutes.\n";
 		std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n";
 	}
 
 	{
 		std::cout << ">>>  T16: Get Long Episodes (ALG)\n";
 		std::cout << "==========:==========:==========:==========:==========\n";
-		seneca::TvShow* show = dynamic_cast<seneca::TvShow*>(col["Game of Thrones"]);
+		seneca::TvShow *show = dynamic_cast<seneca::TvShow *>(col["Game of Thrones"]);
 		auto lst = show->getLongEpisodes();
 		std::cout << "Episodes of 'Game of Thrones' of at least 60 minutes:\n";
-		for (const auto& title : lst)
+		for (const auto &title : lst)
 			std::cout << "- " << title << '\n';
 		std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n";
 	}
@@ -228,11 +230,13 @@ int main(int argc, char** argv)
 		std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n";
 	}
 
+	fclose(stdout);
+
 	return cout;
 }
 
-template<typename T>
-void loadMedia(seneca::Collection& col, const char* filename)
+template <typename T>
+void loadMedia(seneca::Collection &col, const char *filename)
 {
 	std::ifstream file(filename);
 	if (!file)
@@ -245,10 +249,10 @@ void loadMedia(seneca::Collection& col, const char* filename)
 	{
 		try
 		{
-			seneca::MediaItem* item = T::createItem(record);
+			seneca::MediaItem *item = T::createItem(record);
 			col += item;
 		}
-		catch (const char* msg)
+		catch (const char *msg)
 		{
 			std::cout << "ERROR: [" << record << "] " << msg << '\n';
 		}
@@ -260,7 +264,7 @@ void loadMedia(seneca::Collection& col, const char* filename)
 	}
 }
 
-void loadEpisodes(seneca::Collection& col, const char* filename)
+void loadEpisodes(seneca::Collection &col, const char *filename)
 {
 	std::ifstream file(filename);
 	if (!file)
@@ -275,11 +279,11 @@ void loadEpisodes(seneca::Collection& col, const char* filename)
 		{
 			seneca::TvShow::addEpisode(col, record);
 		}
-		catch (const char* msg)
+		catch (const char *msg)
 		{
 			std::cout << "ERROR: [" << record << "] " << msg << '\n';
 		}
-		catch (const std::string& msg)
+		catch (const std::string &msg)
 		{
 			std::cout << "ERROR: " << msg << '\n';
 		}
